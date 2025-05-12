@@ -64,7 +64,26 @@ class InventoryManager:
 
     #method to remove a row from the bike csv
     def remove_bike(self):
-        pass
+        # loading the CSV file before adding to ensure we are working with the most up to date file.
+        self.load_bicycles()
+        while True:
+            try:
+                user_input = int(input("Please enter the ID of the item you want to delete: "))
+                #exception to prevent the program from crashing from invalid input
+            except ValueError:
+                print("Invalid input, try again")
+                continue
+            if user_input not in self.bicycles_df["item_id"].values:
+                    print("Item not found, try again")
+                    continue
+            else:
+                #using the inplace = True to ensure that the no new dataframe is created and the change is saved
+                self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
+                #saving the changes to the CSV file
+                self.bicycles_df.to_csv("bicycles.csv", index = False)
+                print(f"Bike with the item ID {user_input} has been deleted")
+                break
+
     #method to remove a row from the spare csv
     def remove_spare(self):
         pass
