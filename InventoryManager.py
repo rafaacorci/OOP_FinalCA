@@ -86,7 +86,24 @@ class InventoryManager:
 
     #method to remove a row from the spare csv
     def remove_spare(self):
-        pass
+        self.load_spares()
+        while True:
+            try:
+                user_input = int(input("Please enter the ID of the item you want to delete: "))
+                # exception to prevent the program from crashing from invalid input
+            except ValueError:
+                print("Invalid input, try again")
+                continue
+            if user_input not in self.spares_df["item_id"].values:
+                print("Item not found, try again")
+                continue
+            else:
+                # using the inplace = True to ensure that the no new dataframe is created and the change is saved
+                self.spares_df.drop(self.spares_df[self.spares_df["item_id"] == user_input].index, inplace=True)
+                # saving the changes to the CSV file
+                self.spares_df.to_csv("spare_parts.csv", index=False)
+                print(f"The part with the item ID {user_input} has been deleted")
+                break
 
     # method to update an item on bicycles csv
     def update_bicycle(self):
