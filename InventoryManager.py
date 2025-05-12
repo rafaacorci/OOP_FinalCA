@@ -73,17 +73,19 @@ class InventoryManager:
             except ValueError:
                 print("Invalid input, try again")
                 continue
+                #ensuring the user enters a valid input
             if user_input not in self.bicycles_df["item_id"].values:
-                    print("Item not found, try again")
-                    continue
-            else:
-                #using the inplace = True to ensure that the no new dataframe is created and the change is saved
-                self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
-                #saving the changes to the CSV file
-                self.bicycles_df.to_csv("bicycles.csv", index = False)
-                print(f"Bike with the item ID {user_input} has been deleted")
-                break
-
+                    print("Item not found not found. Would you like to try again?")
+                    user_choice = input("Y/N").strip().lower
+                    if user_choice not in ["y","n"]:
+                        print("Invalid input, try again.")
+                    else:
+                        #using the inplace = True to ensure that the no new dataframe is created and the change is saved
+                        self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
+                        #saving the changes to the CSV file
+                        self.bicycles_df.to_csv("bicycles.csv", index = False)
+                        print(f"Bike with the item ID {user_input} has been deleted")
+                        break
     #method to remove a row from the spare csv
     def remove_spare(self):
         self.load_spares()
