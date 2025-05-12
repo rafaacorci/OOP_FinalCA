@@ -1,6 +1,6 @@
 import pandas as pd
 import constructors
-from constructors import Bicycle
+from constructors import Bicycle, SpareParts
 
 
 class InventoryManager:
@@ -16,11 +16,13 @@ class InventoryManager:
     #method to load the csv where spare parts inventory will be stored
     def load_spares(self):
         #loading the spare parts CSV file inside self.spares_df
-        self.spares_df = pd.read_csv("spares_parts.csv")
+        self.spares_df = pd.read_csv("spare_parts.csv")
     #method to add a row to bicycle CSV
-    def add_bike(self, item_id, brand, model, frame_size, serial_number, price, condition):
+    def add_bike(self,brand, model, frame_size, serial_number, price, condition):
         #loading the CSV file before adding to ensure we are working with the most up to date file.
         self.load_bicycles()
+        # this is to create the item ID according to the number of rows on my DataFrame to ensure that every ID is unique.
+        item_id = len(self.bicycles_df) + 1
         #creating a new instance of the Bicycle class
         new_bike = Bicycle(item_id, brand, model, frame_size, serial_number, price, condition)
         #converting the instance to a dictionary so it can be added to the DataFrame
@@ -33,14 +35,32 @@ class InventoryManager:
             "price":new_bike.price,
             "condition":new_bike.condition
         }
-        #concatinating the data to the DataFrame
+        #concatenating the data to the DataFrame
         self.bicycles_df = pd.concat([self.bicycles_df, pd.DataFrame([bike_data])],ignore_index=True)
         #saving the new data from the DataFrame to the respective CSV file
         self.bicycles_df.to_csv("bicycles.csv", index = False)
 
     # method to add a row to spare CSV
-    def add_spares(self):
-        pass
+    def add_spares(self, category: str ,brand:str, model:str, price:float, condition:str):
+        #loading the CSV file before adding to ensure we are working with the most up to date file.
+        self.load_spares()
+        #this is to create the item ID according to the number of rows on my DataFrame to ensure that every ID is unique.
+        item_id = len(self.spares_df) +1
+        #creating a new instance of the SpareParts class
+        new_part = SpareParts(item_id, category,brand, model, price, condition)
+        #converting the instance to a dictionary so it can be added to the CSV file
+        parts_data = {
+            "item_id":new_part.item_id,
+            "category":new_part.category,
+            "brand":new_part.brand,
+            "model":new_part.model,
+            "price":new_part.price,
+            "condition":new_part.condition
+        }
+        #concatenating data to the DataFrame
+        self.spares_df = pd.concat([self.spares_df, pd.DataFrame([parts_data])], ignore_index= True)
+        self.spares_df.to_csv("spare_parts.csv", index = False)
+
 
     #method to remove a row from the bike csv
     def remove_bike(self):
