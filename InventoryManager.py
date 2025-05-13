@@ -76,16 +76,22 @@ class InventoryManager:
                 #ensuring the user enters a valid input
             if user_input not in self.bicycles_df["item_id"].values:
                     print("Item not found not found. Would you like to try again?")
-                    user_choice = input("Y/N").strip().lower
-                    if user_choice not in ["y","n"]:
-                        print("Invalid input, try again.")
-                    else:
-                        #using the inplace = True to ensure that the no new dataframe is created and the change is saved
-                        self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
-                        #saving the changes to the CSV file
-                        self.bicycles_df.to_csv("bicycles.csv", index = False)
-                        print(f"Bike with the item ID {user_input} has been deleted")
-                        break
+                    while True:
+                        user_choice = input("Y/N: ").strip().lower()
+                        if user_choice == "y":
+                            break #return to the previous loop
+                        elif user_choice == "n":
+                            print("Thank you, have a nice day")
+                            return #adicionar opcao depois para que o usuario volte para o menu (agora eu to saindo por competo)
+                        else:
+                          print("Invalid input, try again")
+            else:
+                # using the inplace = True to ensure that the no new dataframe is created and the change is saved
+                self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
+                #saving the changes to the CSV file
+                self.bicycles_df.to_csv("bicycles.csv", index = False)
+                print(f"Bike with the item ID {user_input} has been deleted")
+                break
     #method to remove a row from the spare csv
     def remove_spare(self):
         self.load_spares()
@@ -97,8 +103,16 @@ class InventoryManager:
                 print("Invalid input, try again")
                 continue
             if user_input not in self.spares_df["item_id"].values:
-                print("Item not found, try again")
-                continue
+                print("Item not found. Would you like to try again?")
+                while True:
+                    user_choice = input("Y/N: ").strip().lower()
+                    if user_choice == "y":
+                        break #returning to the previous loop
+                    elif user_choice == "n":
+                        return #exiting the method entirely
+                    else:
+                        print("Invalid input. Try again")
+                        continue
             else:
                 # using the inplace = True to ensure that the no new dataframe is created and the change is saved
                 self.spares_df.drop(self.spares_df[self.spares_df["item_id"] == user_input].index, inplace=True)
