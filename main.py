@@ -101,13 +101,40 @@ def inventory_options():
                 condition = input("What is item condition?")
                 inventory.add_spares(category,brand,model,price,condition)
                 print(f"Your new {category} has been recorded sucessfully")
+                break
+            elif spare_choice == "3":
+                # loading the dataframe so I can validate if the bike exists before trying to remove
+                inventory.load_spares()
+                spare_df = inventory.spares_df
+                while True:
+                    try:
+                        user_input = int(input("Please enter the ID of the item you want to delete: "))
+                        # exception to prevent the program from crashing from invalid input
+                    except ValueError:
+                        print("Invalid input, try again")
+                        continue
+                        # ensuring the user enters a valid input
+                    if user_input not in spare_df["item_id"].values:
+                        print("Item not found not found. Would you like to try again?")
+                        while True:
+                            # since the input is case sensitive, I'm making sure that the input is always lowercase
+                            user_choice = input("Y/N: ").strip().lower()
+                            if user_choice == "y":
+                                break  # return to the previous loop
+                            elif user_choice == "n":
+                                print("Thank you, have a nice day")
+                                return  # returning to the main menu
+                            else:
+                                print("Invalid input, try again")
+                    else:
+                        inventory.remove_spare(user_input)
+                        print(f"Your spare part {user_input} has been removed")
+                        break
 
         elif user_choice == "3":
             return
         else:
             print("invalid input. Try again.")
-
-
 
 def main():
     #main menu loop
