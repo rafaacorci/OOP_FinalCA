@@ -38,12 +38,4 @@ class RepairManager:
 
 
 
-    #method to close and save the repair CSV
-    def save_repair(self):
-        pass
-    #method to generate the repairs report
-    def generate_repair_report(self):
-        pass
-
-
 

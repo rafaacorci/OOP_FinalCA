@@ -13,7 +13,8 @@ def sales_options():
         print("------ Sales manager ------")
         print("1. To register a new bike sale")
         print("2. To register a new spare part sale")
-        print("3. To return to the previous menu")
+        print("3. To generate a sales report")
+        print("4. To return to the previous menu")
 
         user_choice = input("Please select an option").strip()
 
@@ -72,6 +73,9 @@ def sales_options():
                     print(f"Spare part {item_id} sale sucessfully recorded")
                     break
         elif user_choice == "3":
+            sales.generate_sales_report()
+            break
+        elif user_choice == "4":
             return
         else:
             print("Invalid input. Try again")

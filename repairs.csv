@@ -1,0 +1,3 @@
+repair_id,customer_name,description,cost,drop_off_date,collection_date,status
+1,Rafael,Replace inner tube,50.0,2025-05-14,25/05/2025,collected
+2,Joe,Rear tyre puncture,15.0,2025-05-15,25/05/2025,Customer contacted

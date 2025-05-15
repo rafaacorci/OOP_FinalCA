@@ -80,14 +80,12 @@ class SalesManager:
         #saving the data to the respective CSV file.
         self.sales_df.to_csv("sales.csv", index = False)
 
-    # method to save the changes made on the sales CSV file
-    def save_sales(self):
-        pass
     # method generate sales reports
     def generate_sales_report(self):
         self.load_sales()
-        #grouping the sales by dates and kinds with the sum of the total each sold.
+        #making sure that the "sale_date" field is date type to create the charts
         self.sales_df["sale_date"] = pd.to_datetime(self.sales_df["sale_date"])
+        # grouping the sales by dates and kinds with the sum of the total each sold.
         grouped_sales = (self.sales_df.groupby([self.sales_df["sale_date"].dt.date,"kind"])["price"].sum().unstack())
         #plotting bar chart
         grouped_sales.plot(kind = "bar", figsize=(12,6))

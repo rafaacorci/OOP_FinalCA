@@ -1,0 +1,8 @@
+sale_id,item_id,kind,category,brand,model,sale_date,price
+1,1,Bicycle,,Cannondael,Topstone,2025-05-13,1300.0
+2,1,Bicycle,,Cannondael,Topstone,2025-05-13,1300.0
+3,1,Bicycle,,Cannondael,Topstone,2025-05-13,1300.0
+4,1,Bicycle,,Cannondael,Topstone,2025-05-13,1300.0
+5,3,SparePart,calipers,Shimano,Ultegra,2025-05-13,150.0
+6,4,Bicycle,,Allan,Track,2025-05-15,700.0
+7,1,Bicycle,,Cannondael,Topstone,2025-05-15,1300.0

@@ -18,7 +18,7 @@ class InventoryManager:
         #loading the spare parts CSV file inside self.spares_df
         self.spares_df = pd.read_csv("spare_parts.csv")
     #method to add a row to bicycle CSV
-    def add_bike(self,brand, model, frame_size, serial_number, price, condition):
+    def add_bike(self,brand, model, frame_size, serial_number, price:float, condition):
         #loading the CSV file before adding to ensure we are working with the most up to date file.
         self.load_bicycles()
         # this is to create the item ID according to the number of rows on my DataFrame to ensure that every ID is unique.
@@ -63,86 +63,25 @@ class InventoryManager:
 
 
     #method to remove a row from the bike csv
-    def remove_bike(self):
+    def remove_bike(self, user_input):
         # loading the CSV file before adding to ensure we are working with the most up to date file.
         self.load_bicycles()
-        while True:
-            try:
-                user_input = int(input("Please enter the ID of the item you want to delete: "))
-                #exception to prevent the program from crashing from invalid input
-            except ValueError:
-                print("Invalid input, try again")
-                continue
-                #ensuring the user enters a valid input
-            if user_input not in self.bicycles_df["item_id"].values:
-                    print("Item not found not found. Would you like to try again?")
-                    while True:
-                        user_choice = input("Y/N: ").strip().lower()
-                        if user_choice == "y":
-                            break #return to the previous loop
-                        elif user_choice == "n":
-                            print("Thank you, have a nice day")
-                            return #adicionar opcao depois para que o usuario volte para o menu (agora eu to saindo por competo)
-                        else:
-                          print("Invalid input, try again")
-            else:
-                # using the inplace = True to ensure that the no new dataframe is created and the change is saved
-                self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
-                #saving the changes to the CSV file
-                self.bicycles_df.to_csv("bicycles.csv", index = False)
-                print(f"Bike with the item ID {user_input} has been deleted")
-                break
+        # using the inplace = True to ensure that the no new dataframe is created and the change is saved
+        self.bicycles_df.drop(self.bicycles_df[self.bicycles_df["item_id"]== user_input].index, inplace=True)
+        #saving the changes to the CSV file
+        self.bicycles_df.to_csv("bicycles.csv", index = False)
+
     #method to remove a row from the spare csv
-    def remove_spare(self):
+    def remove_spare(self, user_input):
         self.load_spares()
-        while True:
-            try:
-                user_input = int(input("Please enter the ID of the item you want to delete: "))
-                # exception to prevent the program from crashing from invalid input
-            except ValueError:
-                print("Invalid input, try again")
-                continue
-            if user_input not in self.spares_df["item_id"].values:
-                print("Item not found. Would you like to try again?")
-                while True:
-                    user_choice = input("Y/N: ").strip().lower()
-                    if user_choice == "y":
-                        break #returning to the previous loop
-                    elif user_choice == "n":
-                        return #exiting the method entirely
-                    else:
-                        print("Invalid input. Try again")
-                        continue
-            else:
-                # using the inplace = True to ensure that the no new dataframe is created and the change is saved
-                self.spares_df.drop(self.spares_df[self.spares_df["item_id"] == user_input].index, inplace=True)
-                # saving the changes to the CSV file
-                self.spares_df.to_csv("spare_parts.csv", index=False)
-                print(f"The part with the item ID {user_input} has been deleted")
-                break
+        # using the inplace = True to ensure that the no new dataframe is created and the change is saved
+        self.spares_df.drop(self.spares_df[self.spares_df["item_id"] == user_input].index, inplace=True)
+        # saving the changes to the CSV file
+        self.spares_df.to_csv("spare_parts.csv", index=False)
+        print(f"The part with the item ID {user_input} has been deleted")
 
-    # method to update an item on bicycles csv
-    def update_bicycle(self):
-        pass
 
-    # method to update an item on the spare parts csv
-    def update_spare(self):
-        pass
 
-    #method to save/close the bicycles CSV after it has been updated
-    def save_bicycles(self):
-        pass
-
-    # method to save/close the spare parts CSV after it has been updated
-    def save_spares(self):
-        pass
-
-    #method to generate a report of all the spare parts in stock
-    def generate_spares_report(self):
-        pass
-    #method to generate a report with all the bicycles in stock
-    def generate_bicycles_report(self):
-        pass
 
 
 
