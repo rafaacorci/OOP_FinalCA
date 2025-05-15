@@ -30,6 +30,7 @@ def inventory_options():
                 inventory.load_bicycles()
                 print(pd.read_csv("bicycles.csv"))
             if bike_choice == "2":
+                #asking the user the information of the bicycle he wants to add to build the constructor
                 brand = input("What is the brand?")
                 model = input("What is the model?")
                 frame_size = input("What is frame size?")
@@ -38,6 +39,34 @@ def inventory_options():
                 condition = input("What is the bike condition?")
                 inventory.add_bike(brand,model,frame_size,serial_number, price, condition)
                 print(f"Your bike {brand},{model} has been recorded")
+            if bike_choice == "3":
+                # loading the dataframe so I can validate if the bike exists before trying to remove
+                inventory.load_bicycles()
+                bike_df = inventory.bicycles_df
+                while True:
+                    try:
+                        user_input = int(input("Please enter the ID of the item you want to delete: "))
+                        # exception to prevent the program from crashing from invalid input
+                    except ValueError:
+                        print("Invalid input, try again")
+                        continue
+                        # ensuring the user enters a valid input
+                    if user_input not in bike_df["item_id"].values:
+                        print("Item not found not found. Would you like to try again?")
+                        while True:
+                            # since the input is case sensitive, I'm making sure that the input is always lowercase
+                            user_choice = input("Y/N: ").strip().lower()
+                            if user_choice == "y":
+                                break  # return to the previous loop
+                            elif user_choice == "n":
+                                print("Thank you, have a nice day")
+                                return  #returning to the main menu
+                            else:
+                                print("Invalid input, try again")
+                    else:
+                        inventory.remove_bike(user_input)
+                        print(f"Your bicycle {user_input} has been removed")
+                        break
             elif bike_choice == "4":
                 return
         elif user_choice == "2":
@@ -76,7 +105,6 @@ def main():
             return
         else:
             print("Invalid input, try again")
-
 
 user_name = input("Hi! What is your name?")
 main()
