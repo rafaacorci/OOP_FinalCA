@@ -13,15 +13,68 @@ def sales_options():
         print("------ Sales manager ------")
         print("1. To register a new bike sale")
         print("2. To register a new spare part sale")
+        print("3. To return to the previous menu")
 
         user_choice = input("Please select an option").strip()
 
+        if user_choice == "1":
+            #loading the bicycles inventory DataFrame so I can validate if the bike being sold exists.
+            inventory.load_bicycles()
+            bike_df = inventory.bicycles_df
+            while True:
+                try:
+                    item_id = int(input("What is the bike you are selling?"))
+                except ValueError:
+                    print("Invalid input. Try again.")
+                    continue
+                if item_id not in bike_df["item_id"].values:
+                    print("Bike not found. Would you like to try again?")
+                    while True:
+                        # since the input is case sensitive, I'm making sure that the input is always lowercase
+                        user_choice = input("Y/N: ").strip().lower()
+                        if user_choice == "y":
+                            break  # return to the previous loop
+                        elif user_choice == "n":
+                            print("Thank you, have a nice day")
+                            return  # returning to the main menu
+                        else:
+                            print("Invalid input, try again")
+                else:
+                    sales.record_sales_bicyles(item_id)
+                    print(f"Bike {item_id} sale sucessfully recorded")
+                    break
 
 
-
-
-
-
+        elif user_choice == "2":
+            # loading the spare parts inventory DataFrame so I can validate if the bike being sold exists.
+            inventory.load_spares()
+            spare_df = inventory.spares_df
+            while True:
+                try:
+                    item_id = int(input("What is the bike you are selling?"))
+                except ValueError:
+                    print("Invalid input. Try again.")
+                    continue
+                if item_id not in spare_df["item_id"].values:
+                    print("Bike not found. Would you like to try again?")
+                    while True:
+                        # since the input is case sensitive, I'm making sure that the input is always lowercase
+                        user_choice = input("Y/N: ").strip().lower()
+                        if user_choice == "y":
+                            break  # return to the previous loop
+                        elif user_choice == "n":
+                            print("Thank you, have a nice day")
+                            return  # returning to the main menu
+                        else:
+                            print("Invalid input, try again")
+                else:
+                    sales.record_sales_spare(item_id)
+                    print(f"Spare part {item_id} sale sucessfully recorded")
+                    break
+        elif user_choice == "3":
+            return
+        else:
+            print("Invalid input. Try again")
 
 def repair_options():
     while True:
@@ -72,6 +125,7 @@ def repair_options():
                     new_status = input("What is the new status?")
                     repair.update_repair(user_input,new_status)
                     print(f"Your repair {user_input} has been updated to {new_status}")
+                    break
         elif user_choice == "3":
             return
 
