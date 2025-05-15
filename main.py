@@ -28,14 +28,21 @@ def inventory_options():
             #loading the
             if bike_choice == "1":
                 inventory.load_bicycles()
-                print(pd.read_csv("bicycles.csv"))
+                print(inventory.bicycles_df)
             if bike_choice == "2":
                 #asking the user the information of the bicycle he wants to add to build the constructor
                 brand = input("What is the brand?")
                 model = input("What is the model?")
                 frame_size = input("What is frame size?")
                 serial_number = input("What is the serial number?")
-                price = input("What is the price?")
+                price = float(input("What is the price?"))
+                while True:
+                    try:
+                        price = float(input("How much does it costs?"))
+                        break
+                    except ValueError:
+                            print("Price must be a number")
+                            continue
                 condition = input("What is the bike condition?")
                 inventory.add_bike(brand,model,frame_size,serial_number, price, condition)
                 print(f"Your bike {brand},{model} has been recorded")
@@ -74,6 +81,27 @@ def inventory_options():
             print("2. To add a new spare part")
             print("3. To remove a spare part")
             print("4. To return to the previous menu")
+            spare_choice = input("Please select a option ").strip()
+            if spare_choice == "1":
+                inventory.load_spares()
+                print(inventory.spares_df)
+            elif spare_choice == "2":
+                # asking the user the information of the spare part he wants to add to build the constructor
+                category = input("What kind of spare part you want to add?")
+                brand = input(f"What is the {category} brand?")
+                model = input(f"What is the {category} model?")
+                #ensuring a valid input for price
+                while True:
+                    try:
+                        price = float(input("How much does it costs?"))
+                        break
+                    except ValueError:
+                            print("Price must be a number")
+                            continue
+                condition = input("What is item condition?")
+                inventory.add_spares(category,brand,model,price,condition)
+                print(f"Your new {category} has been recorded sucessfully")
+
         elif user_choice == "3":
             return
         else:
