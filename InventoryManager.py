@@ -22,7 +22,7 @@ class InventoryManager:
         #loading the CSV file before adding to ensure we are working with the most up to date file.
         self.load_bicycles()
         # this is to create the item ID according to the number of rows on my DataFrame to ensure that every ID is unique.
-        item_id = len(self.bicycles_df) + 1
+        item_id = len(self.bicycles_df) + 2
         #creating a new instance of the Bicycle class
         new_bike = Bicycle(item_id, brand, model, frame_size, serial_number, price, condition)
         #converting the instance to a dictionary so it can be added to the DataFrame
@@ -45,7 +45,7 @@ class InventoryManager:
         #loading the CSV file before adding to ensure we are working with the most up to date file.
         self.load_spares()
         #this is to create the item ID according to the number of rows on my DataFrame to ensure that every ID is unique.
-        item_id = len(self.spares_df) +1
+        item_id = len(self.spares_df) +2
         #creating a new instance of the SpareParts class
         new_part = SpareParts(item_id, category,brand, model, price, condition)
         #converting the instance to a dictionary so it can be added to the CSV file
@@ -78,7 +78,7 @@ class InventoryManager:
         self.spares_df.drop(self.spares_df[self.spares_df["item_id"] == user_input].index, inplace=True)
         # saving the changes to the CSV file
         self.spares_df.to_csv("spare_parts.csv", index=False)
-        print(f"The part with the item ID {user_input} has been deleted")
+
 
 
 

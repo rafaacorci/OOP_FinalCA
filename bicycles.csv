@@ -1,3 +1,8 @@
 item_id,brand,model,frame_size,serial_number,price,condition
-1,Cannondael,Topstone,Large,SNDAS12,1300,New
-4,Allan,Track,54,jdfjn4343,700,second hand
+1,Cannondale,Topstone,Large,SNDAS12,1300.0,New
+3,Surly,Bombtrack,54cm,HJKS7632,700.0,second hand
+4,Canyon,Grizl 3,53cm,HJSAYS5454,1500.0,New
+5,Cinelli,Vigorelli,57cm,UYTA7654,900.0,new
+6,Engine11,Sprinter,56cm,YRTET4343,1300.0,new
+7,Bianchi,Pista,56cm,HGAF535,1000.0,new
+8,Cannondale,Topstone4,51cm,YAGSG$533,2000.0,New

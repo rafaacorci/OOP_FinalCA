@@ -17,7 +17,7 @@ class SalesManager:
     # method to record a new sale
     def record_sales_bicyles(self, item_id):
         self.load_sales()
-        sale_id = len(self.sales_df)+1
+        sale_id = len(self.sales_df)+2
         #opening the bicycle CSV file
         self.inventory.load_bicycles()
         bike_df = self.inventory.bicycles_df
@@ -49,11 +49,10 @@ class SalesManager:
     #record the sales of spare parts
     def record_sales_spare(self, item_id):
         self.load_sales()
-        sale_id = len(self.sales_df) +1
+        sale_id = len(self.sales_df) +2
         #opening spare parts CSV
         self.inventory.load_spares()
         spare_df = self.inventory.spares_df
-        item_id = int(input("What is the item id?"))
         #using this information to help build the constructor
         part_id = spare_df[spare_df["item_id"]==item_id].iloc[0]
         #fetching the information I want from the DataFrame to build the constructor
@@ -84,7 +83,7 @@ class SalesManager:
     def generate_sales_report(self):
         self.load_sales()
         #making sure that the "sale_date" field is date type to create the charts
-        self.sales_df["sale_date"] = pd.to_datetime(self.sales_df["sale_date"])
+        self.sales_df["sale_date"] = pd.to_datetime(self.sales_df["sale_date"], dayfirst= True)
         # grouping the sales by dates and kinds with the sum of the total each sold.
         grouped_sales = (self.sales_df.groupby([self.sales_df["sale_date"].dt.date,"kind"])["price"].sum().unstack())
         #plotting bar chart

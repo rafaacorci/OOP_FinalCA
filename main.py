@@ -52,12 +52,12 @@ def sales_options():
             spare_df = inventory.spares_df
             while True:
                 try:
-                    item_id = int(input("What is the bike you are selling?"))
+                    item_id = int(input("What is the part you are selling?"))
                 except ValueError:
                     print("Invalid input. Try again.")
                     continue
                 if item_id not in spare_df["item_id"].values:
-                    print("Bike not found. Would you like to try again?")
+                    print("Part not found. Would you like to try again?")
                     while True:
                         # since the input is case sensitive, I'm making sure that the input is always lowercase
                         user_choice = input("Y/N: ").strip().lower()
@@ -217,6 +217,7 @@ def inventory_options():
                 while True:
                     try:
                         price = float(input("How much does it costs?"))
+                        break
                     except ValueError:
                             print("Price must be a number")
                             continue
@@ -250,6 +251,7 @@ def inventory_options():
                     else:
                         inventory.remove_spare(user_input)
                         print(f"Your spare part {user_input} has been removed")
+                        break
         elif user_choice == "3":
             return
         else:

@@ -13,7 +13,7 @@ class RepairManager:
     #method to record a new repair on CSV
     def record_repair(self,customer_name: str, description: str, cost: float, drop_off_date, collection_date):
         self.load_repair()
-        repair_id = len(self.repair_df) +1
+        repair_id = len(self.repair_df) +2
         #creating a new instance of repairs
         new_repair = Repairs(repair_id,customer_name,description,cost,drop_off_date, collection_date,"Open")
         #converting instance to dictionary
